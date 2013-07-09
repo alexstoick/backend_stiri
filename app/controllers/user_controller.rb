@@ -28,8 +28,9 @@ class UserController < ApplicationController
 		msaccount = params[:msaccount]
 		mstoken = params[:mstoken]
 
-		if ( User.find_by_msaccount ( msaccount) )
-			render json: { "user" => "already exists" }
+		user = User.find_by_msaccount ( msaccount)
+		if (  user.nil? )
+			render json: { "user" => user.to_json }
 			return
 		end
 
