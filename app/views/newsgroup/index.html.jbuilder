@@ -1,1 +1,1 @@
-json.array! @newsgroup.newssources, :url , :title, :description
+json.array! @newsgroup.newssources, :url , :title, :description, :id

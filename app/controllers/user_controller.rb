@@ -7,7 +7,7 @@ class UserController < ApplicationController
 
 	end
 
-	def create
+	def createGroup
 		#create a new group
 
 		#check for the goddamn auth token
@@ -28,20 +28,14 @@ class UserController < ApplicationController
 		msaccount = params[:msaccount]
 		mstoken = params[:mstoken]
 
-		user = User.find_by_msaccount ( msaccount)
-		if (  user.nil? )
-			render json: { "user" => user.to_json }
-			return
+		@user = User.find_by_msaccount ( msaccount)
+		if ( @user.nil? )
+			@user = User.new()
+			@user.msaccount = msaccount
+			@user.mstoken = mstoken
+			@user.save!
+
 		end
-
-		user = User.new()
-
-		user.msaccount = msaccount
-		user.mstoken = mstoken
-
-		user.save!
-
-		render json: { "user" => user.to_json }
 
 	end
 
