@@ -21,7 +21,7 @@ class NewsgroupController < ApplicationController
 		feed.newsgroup_id = params[:groupid]
 		feed.save!
 
-		render json: { "sucess" => true }
+		render json: { "sucess" => true , "feed_id" => feed.id}
 	end
 
 	def rename
