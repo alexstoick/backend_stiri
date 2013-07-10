@@ -19,7 +19,7 @@ class UserController < ApplicationController
 		newsgroup.user_id = user_id
 		newsgroup.save!
 
-		render json: { "success" => true }
+		render json: { "success" => true , "group_id" => newsgroup.id }
 	end
 
 	def create
@@ -28,13 +28,12 @@ class UserController < ApplicationController
 		msaccount = params[:msaccount]
 		mstoken = params[:mstoken]
 
-		@user = User.find_by_msaccount ( msaccount)
+		@user = User.find_by_msaccount ( msaccount )
 		if ( @user.nil? )
 			@user = User.new()
 			@user.msaccount = msaccount
 			@user.mstoken = mstoken
 			@user.save!
-
 		end
 
 	end

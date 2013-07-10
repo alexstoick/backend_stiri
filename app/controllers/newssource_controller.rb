@@ -17,7 +17,7 @@ class NewssourceController < ApplicationController
 		feed.title = new_title
 		feed.save!
 
-		render json: { "success" => true }
+		render json: { "success" => true  }
 
 	end
 
