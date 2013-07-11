@@ -42,7 +42,7 @@ class NewssourceController < ApplicationController
 
 		feed = Newssource.find( feedid )
 
-		feed.destroy!
+		feed.destroy
 
 		render json: { "success" => true }
 
