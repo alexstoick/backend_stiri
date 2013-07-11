@@ -42,10 +42,10 @@ class NewsgroupController < ApplicationController
 
 		newsgroup = Newsgroup.find( params[:groupid] )
 		newsgroup.newssources.each do |feed|
-			feed.destroy!
+			feed.destroy
 		end
 
-		newsgroup.destroy!
+		newsgroup.destroy
 		render json: {"success" => true }
 	end
 
