@@ -4,7 +4,6 @@ class UserController < ApplicationController
 	def index
 		#show all feeds
 		@user = User.find( params[:id] )
-
 	end
 
 	def createGroup
@@ -35,10 +34,10 @@ class UserController < ApplicationController
 			@user.mstoken = mstoken
 			@user.save!
 		end
-
 	end
 
 	def update
+		#add a different account
 	end
 
 end
