@@ -8,7 +8,7 @@ BackendStiri::Application.routes.draw do
 	match "user/:id" , :to => "user#createGroup" , :via => :post
 	match "user/:id/:groupid" , :to => "newsgroup#index" , :via => :get
 	match "user/:id/:groupid" , :to => "newsgroup#create" , :via => :post
-	match "user/:id/:groupid" , :to => "newsgroup#rename" , :via => :patch
+	match "user/:id/:groupid" , :to => "newsgroup#rename" , :via => :put
 	match "user/:id/:groupid" , :to => "newsgroup#delete" , :via => :delete
 	match "user/:id/:groupid/:feedid" , :to => "newssource#rename" , :via => :put
 	match "user/:id/:groupid/:feedid" , :to => "newssource#change" , :via => :patch
