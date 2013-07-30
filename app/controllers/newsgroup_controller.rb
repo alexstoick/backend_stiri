@@ -1,10 +1,13 @@
 class NewsgroupController < ApplicationController
 
+	require 'ruby-mpns'
+
 	skip_before_filter :verify_authenticity_token
 
 	def index
 
 		@newsgroup = Newsgroup.find(params[:groupid])
+		device = params[:device]
 
 	end
 
@@ -13,6 +16,7 @@ class NewsgroupController < ApplicationController
 		title = params[:title]
 		url = params[:url]
 		description = params[:description]
+		current_device = params[:device]
 
 		feed = Newssource.new()
 		feed.title = title
@@ -21,16 +25,29 @@ class NewsgroupController < ApplicationController
 		feed.newsgroup_id = params[:groupid]
 		feed.save!
 
+		options = {
+			title: "Creare grup",
+		}
+
+		view_context.updateDevices(params[:id] , device , options )
+
 		render json: { "sucess" => true , "feed_id" => feed.id}
 	end
 
 	def rename
 
 		new_title = params[:title]
+		current_device = params[:device]
 
 		newsgroup = Newsgroup.find( params[:groupid] )
 		newsgroup.title = new_title
 		newsgroup.save!
+
+		options = {
+			title: "Redenumire grup",
+		}
+
+		view_context.updateDevices(params[:id] , device , options )
 
 		render json: { "success" => true }
 
@@ -39,6 +56,8 @@ class NewsgroupController < ApplicationController
 	def delete
 
 		groupid = params[:groupid]
+		current_device = params[:device]
+
 
 		newsgroup = Newsgroup.find( params[:groupid] )
 		newsgroup.newssources.each do |feed|
@@ -46,6 +65,13 @@ class NewsgroupController < ApplicationController
 		end
 
 		newsgroup.destroy
+
+		options = {
+			title: "Stergere grup",
+		}
+
+		view_context.updateDevices(params[:id] , device , options )
+
 		render json: {"success" => true }
 	end
 

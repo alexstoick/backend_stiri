@@ -13,4 +13,5 @@ BackendStiri::Application.routes.draw do
 	match "user/:id/:groupid/:feedid" , :to => "newssource#rename" , :via => :put
 	match "user/:id/:groupid/:feedid" , :to => "newssource#change" , :via => :patch
 	match "user/:id/:groupid/:feedid" , :to => "newssource#delete" , :via => :delete
+	match "register/", :to => "device#index"
 end

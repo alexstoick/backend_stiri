@@ -71,6 +71,8 @@ GEM
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    ruby-mpns (1.2.0)
+      builder
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -91,3 +93,4 @@ DEPENDENCIES
   mysql2
   newrelic_rpm
   rails (= 3.2.13)
+  ruby-mpns

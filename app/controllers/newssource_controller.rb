@@ -17,6 +17,12 @@ class NewssourceController < ApplicationController
 		feed.title = new_title
 		feed.save!
 
+		options = {
+			title: "Redenumire feed"
+		}
+
+		view_context.updateDevices(params[:id] , device , options )
+
 		render json: { "success" => true  }
 
 	end
@@ -31,6 +37,12 @@ class NewssourceController < ApplicationController
 		feed.newsgroup_id = new_groupid
 		feed.save!
 
+		options = {
+			title: "Schimbare grup feed"
+		}
+
+		view_context.updateDevices(params[:id] , device , options )		
+
 		render json: { "success" => true }
 
 	end
@@ -43,6 +55,12 @@ class NewssourceController < ApplicationController
 		feed = Newssource.find( feedid )
 
 		feed.destroy
+
+		options = {
+			title: "Stergere feed"
+		}
+
+		view_context.updateDevices(params[:id] , device , options )
 
 		render json: { "success" => true }
 
