@@ -8,6 +8,14 @@ class NewsgroupController < ApplicationController
 
 		@newsgroup = Newsgroup.find(params[:groupid])
 
+		current_device = params[:device]
+
+		options = {
+			title: "Creare grup",
+		}
+
+		view_context.updateDevices(params[:id] , current_device , options )
+
 	end
 
 	def create
