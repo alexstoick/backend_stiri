@@ -10,12 +10,6 @@ class NewsgroupController < ApplicationController
 
 		current_device = params[:device]
 
-		options = {
-			title: "Creare grup",
-		}
-
-		view_context.updateDevices(params[:id] , current_device , options )
-
 	end
 
 	def create
@@ -33,7 +27,7 @@ class NewsgroupController < ApplicationController
 		feed.save!
 
 		options = {
-			title: "Creare grup",
+			title: "Creare feed",
 		}
 
 		view_context.updateDevices(params[:id] , current_device , options )
