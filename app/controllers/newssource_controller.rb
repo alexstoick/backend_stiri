@@ -10,7 +10,7 @@ class NewssourceController < ApplicationController
 	def rename
 
 		new_title = params[:title]
-
+		current_device = params[:device]
 		feedid = params[:feedid]
 
 		feed = Newssource.find( feedid )
@@ -21,7 +21,7 @@ class NewssourceController < ApplicationController
 			title: "Redenumire feed"
 		}
 
-		view_context.updateDevices(params[:id] , device , options )
+		view_context.updateDevices(params[:id] , current_device , options )
 
 		render json: { "success" => true  }
 
@@ -30,7 +30,7 @@ class NewssourceController < ApplicationController
 	def change
 
 		new_group = params[:new_groupid]
-
+		current_device = params[:device]
 		feedid = params[:feedid]
 
 		feed = Newssource.find( feedid )
@@ -41,7 +41,7 @@ class NewssourceController < ApplicationController
 			title: "Schimbare grup feed"
 		}
 
-		view_context.updateDevices(params[:id] , device , options )		
+		view_context.updateDevices(params[:id] , current_device , options )
 
 		render json: { "success" => true }
 
@@ -51,16 +51,16 @@ class NewssourceController < ApplicationController
 
 
 		feedid = params[:feedid]
+		current_device = params[:device]
 
 		feed = Newssource.find( feedid )
-
 		feed.destroy
 
 		options = {
 			title: "Stergere feed"
 		}
 
-		view_context.updateDevices(params[:id] , device , options )
+		view_context.updateDevices(params[:id] , current_device , options )
 
 		render json: { "success" => true }
 

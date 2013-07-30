@@ -7,7 +7,6 @@ class NewsgroupController < ApplicationController
 	def index
 
 		@newsgroup = Newsgroup.find(params[:groupid])
-		device = params[:device]
 
 	end
 
@@ -29,7 +28,7 @@ class NewsgroupController < ApplicationController
 			title: "Creare grup",
 		}
 
-		view_context.updateDevices(params[:id] , device , options )
+		view_context.updateDevices(params[:id] , current_device , options )
 
 		render json: { "sucess" => true , "feed_id" => feed.id}
 	end
@@ -47,7 +46,7 @@ class NewsgroupController < ApplicationController
 			title: "Redenumire grup",
 		}
 
-		view_context.updateDevices(params[:id] , device , options )
+		view_context.updateDevices(params[:id] , current_device , options )
 
 		render json: { "success" => true }
 
@@ -70,7 +69,7 @@ class NewsgroupController < ApplicationController
 			title: "Stergere grup",
 		}
 
-		view_context.updateDevices(params[:id] , device , options )
+		view_context.updateDevices(params[:id] , current_device , options )
 
 		render json: {"success" => true }
 	end
