@@ -30,7 +30,7 @@ class NewsgroupController < ApplicationController
 			title: "Creare feed",
 		}
 
-		view_context.updateDevices(params[:id] , current_device , options )
+		#view_context.updateDevices(params[:id] , current_device , options )
 
 		render json: { "sucess" => true , "feed_id" => feed.id}
 	end
@@ -48,7 +48,7 @@ class NewsgroupController < ApplicationController
 			title: "Redenumire grup",
 		}
 
-		view_context.updateDevices(params[:id] , current_device , options )
+		#view_context.updateDevices(params[:id] , current_device , options )
 
 		render json: { "success" => true }
 
@@ -71,7 +71,7 @@ class NewsgroupController < ApplicationController
 			title: "Stergere grup",
 		}
 
-		view_context.updateDevices(params[:id] , current_device , options )
+		#view_context.updateDevices(params[:id] , current_device , options )
 
 		render json: {"success" => true }
 	end

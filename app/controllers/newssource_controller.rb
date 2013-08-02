@@ -21,7 +21,7 @@ class NewssourceController < ApplicationController
 			title: "Redenumire feed"
 		}
 
-		view_context.updateDevices(params[:id] , current_device , options )
+		#view_context.updateDevices(params[:id] , current_device , options )
 
 		render json: { "success" => true  }
 
@@ -41,7 +41,7 @@ class NewssourceController < ApplicationController
 			title: "Schimbare grup feed"
 		}
 
-		view_context.updateDevices(params[:id] , current_device , options )
+		#view_context.updateDevices(params[:id] , current_device , options )
 
 		render json: { "success" => true }
 
@@ -60,7 +60,7 @@ class NewssourceController < ApplicationController
 			title: "Stergere feed"
 		}
 
-		view_context.updateDevices(params[:id] , current_device , options )
+		#view_context.updateDevices(params[:id] , current_device , options )
 
 		render json: { "success" => true }
 
