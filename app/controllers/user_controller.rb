@@ -31,7 +31,7 @@ class UserController < ApplicationController
 		msaccount = params[:msaccount]
 		mstoken = params[:mstoken]
 
-		if ( fbaccount.nil ? )
+		if ( fbaccount.nil? )
 			account = msaccount
 			token = mstoken
 			type="fb"
