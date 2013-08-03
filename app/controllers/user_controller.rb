@@ -24,14 +24,33 @@ class UserController < ApplicationController
 	def create
 
 		#daca e null cautam twacc,
+
+		fbaccount = params[:fbaccount]
+		fbtoken = params[:fbtoken]
+
 		msaccount = params[:msaccount]
 		mstoken = params[:mstoken]
 
-		@user = User.find_by_msaccount ( msaccount )
+		if ( fbaccount.nil ? )
+			account = msaccount
+			token = mstoken
+			type="fb"
+		else
+			account = fbaccount
+			token = fbtoken
+			type="ms"
+		end
+
+		@user = User.find_by_msaccount ( account )
 		if ( @user.nil? )
 			@user = User.new()
-			@user.msaccount = msaccount
-			@user.mstoken = mstoken
+			if ( type == "ms" )
+				@user.msaccount = account
+				@user.mstoken = token
+			else
+				@user.fbaccount = fbaccount
+				@user.fbtoken = token
+			end
 			@user.save!
 		end
 	end
