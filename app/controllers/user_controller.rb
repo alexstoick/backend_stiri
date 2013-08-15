@@ -23,54 +23,43 @@ class UserController < ApplicationController
 
 	def create
 
-		#daca e null cautam twacc,
+		account = params[:account]
+		token = params[:token]
 
-		gplusaccount = params[:gplusaccount]
-		gplustoken = params[:gplustoken]
+		#fb		#gp		#tw		#ms
+		type = params[:type]
 
-		fbaccount = params[:fbaccount]
-		fbtoken = params[:fbtoken]
-
-		msaccount = params[:msaccount]
-		mstoken = params[:mstoken]
-
-		##BETTER GENERATE DYNAMIC VARIABLE NAMES... 
-
-		##FUCK MY LIFE
-
-		if ( fbaccount.nil? )
-			if ( gplusaccount.nil? )
-				account = msaccount
-				token = mstoken
-				type="fb"
-			else
-				account = gplusaccount
-				token = gplustoken
-				type="g+"
-			end
-		else
-			account = fbaccount
-			token = fbtoken
-			type="ms"
-		end
-
-		@user = User.find_by_msaccount ( account )
-		if ( @user.nil? )
-			@user = User.new()
-			if ( type == "ms" )
-				@user.msaccount = account
-				@user.mstoken = token
-			else
-				if ( type="fb")
-					@user.fbaccount = fbaccount
+		case type
+			when 'fb'
+				@user = User.find_by_fbaccount ( account )
+				if ( @user.nil? )
+					@user = User.new()
+					@user.fbaccount = account
 					@user.fbtoken = token
-				else
-					@user.fbaccount = gplusaccount
-					@user.fbtoken = gplustoken
 				end
-			end
-			@user.save!
+			when 'gp'
+				@user = User.find_by_gpaccount ( account )
+				if ( @user.nil? )
+					@user = User.new()
+					@user.gpaccount = account
+					@user.gptoken = token
+				end
+			when 'tw'
+				@user = User.find_by_twaccount ( account )
+				if ( @user.nil? )
+					@user = User.new()
+					@user.twaccount = account
+					@user.twtoken = token
+				end
+			when 'ms'
+				@user = User.find_by_msaccount ( account )
+				if ( @user.nil? )
+					@user = User.new()
+					@user.msaccount = account
+					@user.mstoken = token
+				end
 		end
+		@user.save!
 	end
 
 	def update
