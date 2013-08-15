@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130802162156) do
+ActiveRecord::Schema.define(:version => 20130802762156) do
 
   create_table "articles", :force => true do |t|
     t.text     "url"
@@ -52,6 +52,10 @@ ActiveRecord::Schema.define(:version => 20130802162156) do
     t.text     "mstoken"
     t.string   "fbaccount"
     t.string   "fbtoken"
+    t.string   "twaccount"
+    t.text     "twtoken"
+    t.string   "gpaccount"
+    t.text     "gptoken"
   end
 
 end
