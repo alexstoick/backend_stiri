@@ -25,16 +25,29 @@ class UserController < ApplicationController
 
 		#daca e null cautam twacc,
 
+		gplusaccount = params[:gplusaccount]
+		gplustoken = params[:gplustoken]
+
 		fbaccount = params[:fbaccount]
 		fbtoken = params[:fbtoken]
 
 		msaccount = params[:msaccount]
 		mstoken = params[:mstoken]
 
+		##BETTER GENERATE DYNAMIC VARIABLE NAMES... 
+
+		##FUCK MY LIFE
+
 		if ( fbaccount.nil? )
-			account = msaccount
-			token = mstoken
-			type="fb"
+			if ( gplusaccount.nil? )
+				account = msaccount
+				token = mstoken
+				type="fb"
+			else
+				account = gplusaccount
+				token = gplustoken
+				type="g+"
+			end
 		else
 			account = fbaccount
 			token = fbtoken
@@ -48,8 +61,13 @@ class UserController < ApplicationController
 				@user.msaccount = account
 				@user.mstoken = token
 			else
-				@user.fbaccount = fbaccount
-				@user.fbtoken = token
+				if ( type="fb")
+					@user.fbaccount = fbaccount
+					@user.fbtoken = token
+				else
+					@user.fbaccount = gplusaccount
+					@user.fbtoken = gplustoken
+				end
 			end
 			@user.save!
 		end
