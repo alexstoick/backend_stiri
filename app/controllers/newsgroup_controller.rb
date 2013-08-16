@@ -49,7 +49,7 @@ class NewsgroupController < ApplicationController
 		entry.newsgroup_id = params[:groupid]
 		entry.save!
 
-		render json: { "id" => feed.id , "entry_id" => entry.id }
+		render json: { "entry_id" => entry.id , "id" => feed.id , "title" => title }
 	end
 
 	def rename
