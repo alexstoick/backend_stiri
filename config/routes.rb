@@ -3,7 +3,7 @@ BackendStiri::Application.routes.draw do
 	root :to => "user#index"
 
 	match "user/login" => "user#create", :via => :post
-	match "user/login" => "user#update", :via => :put
+	match "user/merge" => "user#update", :via => :put
 	match "user/:id" , :to => "user#index" , :via => :get
 	match "user/:id" , :to => "user#createGroup" , :via => :post
 	match "user/:id/:groupid" , :to => "newsgroup#index" , :via => :get
