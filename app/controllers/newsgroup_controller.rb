@@ -30,7 +30,7 @@ class NewsgroupController < ApplicationController
 			entry.newssource_id = feed.id
 			entry.newsgroup_id = params[:groupid]
 			entry.save!
-			render json: { "id" => feed.id , "entry_id" => entry.id }
+			render json: { "id" => feed.id , "entry_id" => entry.id , "title" => feed.title }
 			return
 		end
 
