@@ -26,7 +26,11 @@ class NewsgroupController < ApplicationController
 		feed = Newssource.find_by_url( url )
 
 		if ( ! feed.nil? )
-			render json: { "id" => feed.id }
+			entry = GroupEntry.new()
+			entry.newssource_id = feed.id
+			entry.newsgroup_id = params[:groupid]
+			entry.save!
+			render json: { "id" => feed.id , "entry_id" => entry.id }
 			return
 		end
 
@@ -34,15 +38,18 @@ class NewsgroupController < ApplicationController
 		feed.url = url
 
 		link = 'http://localhost:3000/title/?url=' + url
-		content = open( link ).read()
+		title = open( link ).read()
 
-		parsed = JSON.parse( content )
-		title = parsed["feedTitle"]
 		feed.title = title
 
 		feed.save!
 
-		render json: { "sucess" => true , "id" => feed.id}
+		entry = GroupEntry.new()
+		entry.newssource_id = feed.id
+		entry.newsgroup_id = params[:groupid]
+		entry.save!
+
+		render json: { "id" => feed.id , "entry_id" => entry.id }
 	end
 
 	def rename
