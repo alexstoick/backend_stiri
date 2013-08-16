@@ -1,6 +1,8 @@
 class NewsgroupController < ApplicationController
 
 	require 'ruby-mpns'
+	require 'open-uri'
+
 
 	skip_before_filter :verify_authenticity_token
 
@@ -14,25 +16,33 @@ class NewsgroupController < ApplicationController
 
 	def create
 
-		title = params[:title]
 		url = params[:url]
-		description = params[:description]
-		current_device = params[:device]
+
+		if ( url.nil? )
+			render json: {"error" => "Wrong params"}
+			return
+		end
+
+		feed = Newssource.find_by_url( url )
+
+		if ( ! feed.nil? )
+			render json: { "id" => feed.id }
+			return
+		end
 
 		feed = Newssource.new()
-		feed.title = title
 		feed.url = url
-		feed.description = description
-		feed.newsgroup_id = params[:groupid]
+
+		link = 'http://localhost:3000/title/?url=' + url
+		content = open( link ).read()
+
+		parsed = JSON.parse( content )
+		title = parsed["feedTitle"]
+		feed.title = title
+
 		feed.save!
 
-		options = {
-			title: "Creare feed",
-		}
-
-		#view_context.updateDevices(params[:id] , current_device , options )
-
-		render json: { "sucess" => true , "feed_id" => feed.id}
+		render json: { "sucess" => true , "id" => feed.id}
 	end
 
 	def rename
@@ -47,8 +57,6 @@ class NewsgroupController < ApplicationController
 		options = {
 			title: "Redenumire grup",
 		}
-
-		#view_context.updateDevices(params[:id] , current_device , options )
 
 		render json: { "success" => true }
 
@@ -70,8 +78,6 @@ class NewsgroupController < ApplicationController
 		options = {
 			title: "Stergere grup",
 		}
-
-		#view_context.updateDevices(params[:id] , current_device , options )
 
 		render json: {"success" => true }
 	end

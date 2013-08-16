@@ -6,27 +6,6 @@ class NewssourceController < ApplicationController
 	#trebuie sa fii sigur sa deletesti un feed din grupul asta
 	#deleste un feed al userului -- will be solved cand impunem auth_token
 
-
-	def rename
-
-		new_title = params[:title]
-		current_device = params[:device]
-		feedid = params[:feedid]
-
-		feed = Newssource.find( feedid )
-		feed.title = new_title
-		feed.save!
-
-		options = {
-			title: "Redenumire feed"
-		}
-
-		#view_context.updateDevices(params[:id] , current_device , options )
-
-		render json: { "success" => true  }
-
-	end
-
 	def change
 
 		new_group = params[:new_groupid]
