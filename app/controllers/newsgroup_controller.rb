@@ -37,7 +37,7 @@ class NewsgroupController < ApplicationController
 		feed = Newssource.new()
 		feed.url = url
 
-		link = 'http://localhost:3000/title/?url=' + url
+		link = 'http://37.139.8.146:3000/title/?url=' + url
 		title = open( link ).read()
 
 		feed.title = title
