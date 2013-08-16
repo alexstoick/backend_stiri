@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130802762156) do
+ActiveRecord::Schema.define(:version => 20130816085321) do
 
   create_table "articles", :force => true do |t|
     t.text     "url"
@@ -29,6 +29,13 @@ ActiveRecord::Schema.define(:version => 20130802762156) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "group_entries", :force => true do |t|
+    t.integer  "newssource_id"
+    t.integer  "newsgroup_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
   create_table "newsgroups", :force => true do |t|
     t.string   "title"
     t.datetime "created_at"
@@ -38,12 +45,11 @@ ActiveRecord::Schema.define(:version => 20130802762156) do
 
   create_table "newssources", :force => true do |t|
     t.string   "url"
-    t.string   "title"
-    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "newsgroup_id"
   end
+
+  add_index "newssources", ["url"], :name => "url", :unique => true
 
   create_table "users", :force => true do |t|
     t.datetime "created_at"
