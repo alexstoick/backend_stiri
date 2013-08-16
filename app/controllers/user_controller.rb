@@ -3,7 +3,7 @@ class UserController < ApplicationController
 
 	def index
 		#show all feeds
-		user = User.find( params[:id] )
+		@user = User.find( params[:id] )
 	end
 
 	def createGroup
