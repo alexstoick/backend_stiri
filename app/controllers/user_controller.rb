@@ -26,6 +26,10 @@ class UserController < ApplicationController
 		account = params[:account]
 		token = params[:token]
 
+		if ( account.nil? || token.nil? )
+			render json: { "error" => "Wrong params"}
+			return
+		end
 		#fb		#gp		#tw		#ms
 		type = params[:type]
 
@@ -58,6 +62,9 @@ class UserController < ApplicationController
 					@user.msaccount = account
 					@user.mstoken = token
 				end
+			else
+				render json: {"error" => "Wrong type of account"}
+				return
 		end
 		@user.save!
 	end
