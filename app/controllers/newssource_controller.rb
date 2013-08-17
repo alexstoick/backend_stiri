@@ -29,10 +29,11 @@ class NewssourceController < ApplicationController
 	def delete
 
 
-		feedid = params[:feedid]
+		feed_id = params[:feedid]
 		current_device = params[:device]
+		group_id = params[:groupid]
 
-		feed = Newssource.find( feedid )
+		feed = GroupEntry.find_by_newssource_id_and_newsgroup_id( feed_id , group_id )
 		feed.destroy
 
 		options = {
