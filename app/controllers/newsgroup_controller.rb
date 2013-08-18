@@ -1,6 +1,5 @@
 class NewsgroupController < ApplicationController
 
-	require 'ruby-mpns'
 	require 'open-uri'
 
 
@@ -22,6 +21,12 @@ class NewsgroupController < ApplicationController
 			render json: {"error" => "Wrong params"}
 			return
 		end
+
+		conn = view_context.get_connection()
+		neo4j_feed = view_context.get_feed( url , conn )
+		neo4j_user = view_context.get_user( params[:id] , conn )
+		view_context.create_relationship( neo4j_feed , neo4j_user , conn )
+
 
 		feed = Newssource.find_by_url( url )
 

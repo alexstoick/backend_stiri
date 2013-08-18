@@ -8,6 +8,8 @@ gem 'jbuilder'
 
 gem 'newrelic_rpm'
 
-gem 'ruby-mpns'
+#gem 'ruby-mpns'
+
+gem 'neography'
 
 # gem 'unicorn'

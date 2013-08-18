@@ -1,15 +1,38 @@
+require 'neography'
+
 module ApplicationHelper
 
-	def get_feed ( url )
+	def get_connection
+		Neography.configure do |config|
+		  config.protocol       = "http://"
+		  config.server         = "37.139.8.146"
+		  config.port           = 7474
+		  config.directory      = ""  # prefix this path with '/'
+		  config.cypher_path    = "/cypher"
+		  config.gremlin_path   = "/ext/GremlinPlugin/graphdb/execute_script"
+		  config.log_file       = "@neography.log"
+		  config.log_enabled    = false
+		  config.max_threads    = 20
+		  config.authentication = nil  # 'basic' or 'digest'
+		  config.username       = nil
+		  config.password       = nil
+		  config.parser         = MultiJsonParser
+		end
 
-		feed = Neography::Node.find( "default" , "url" , url )
+		neo = Neography::Rest.new()
+		return neo
+	end
+
+	def get_feed ( url , conn )
+
+		feed = Neography::Node.find( "feed" , "url" , url )
 
 		if ( feed.nil? )
 			puts "Feed does not exist"
 
 			feed = Neography::Node.create( "url" => url )
-			@neo.add_node_to_index( "default" , "url" , url , feed )
-			@neo.add_label( feed , "feed" )
+			conn.add_node_to_index( "feed" , "url" , url , feed )
+			conn.add_label( feed , "feed" )
 
 			puts "Created feed with id " + feed.neo_id
 
@@ -21,15 +44,15 @@ module ApplicationHelper
 
 	end
 
-	def get_user ( id )
-		user = Neography::Node.find( "users" , "id" , id )
+	def get_user ( id , conn )
+		user = Neography::Node.find( "user" , "id" , id )
 
 		if ( user.nil? )
 			puts "User does not exist"
 
 			user = Neography::Node.create( "id" => id )
-			@neo.add_node_to_index( "users" , "id" , id , user )
-			@neo.add_label( user , "user")
+			conn.add_node_to_index( "user" , "id" , id , user )
+			conn.add_label( user , "user")
 
 			puts "Created user with id " + user.neo_id
 
@@ -40,8 +63,8 @@ module ApplicationHelper
 		end
 	end
 
-	def create_relationship ( feed , user )
-		if ( @neo.get_node_relationships_to( feed, user ).nil? )
+	def create_relationship ( feed , user , conn )
+		if ( conn.get_node_relationships_to( feed, user ).nil? )
 			feed.outgoing(:subscribed) << user
 			puts "Created relationship"
 		else
