@@ -1,21 +1,52 @@
 module ApplicationHelper
 
-	def updateDevices (user_id , current_device , options )
+	def get_feed ( url )
 
-		devices = User.find( user_id ).devices
-		current_device = current_device.to_i
+		feed = Neography::Node.find( "default" , "url" , url )
 
-		devices.each do |device|
-			if ( device.id != current_device )
+		if ( feed.nil? )
+			puts "Feed does not exist"
 
-				#Rails.logger.debug( device.id.to_s() + "###"  + current_device.to_s())
-				uri = device.device_id
-				response = MicrosoftPushNotificationService.send_notification uri, :toast, options
-				Rails.logger.debug( response )
+			feed = Neography::Node.create( "url" => url )
+			@neo.add_node_to_index( "default" , "url" , url , feed )
+			@neo.add_label( feed , "feed" )
 
-			end
+			puts "Created feed with id " + feed.neo_id
+
+			return feed
+		else
+			puts "Feed exists with id " + feed.neo_id
+			return feed
 		end
 
+	end
+
+	def get_user ( id )
+		user = Neography::Node.find( "users" , "id" , id )
+
+		if ( user.nil? )
+			puts "User does not exist"
+
+			user = Neography::Node.create( "id" => id )
+			@neo.add_node_to_index( "users" , "id" , id , user )
+			@neo.add_label( user , "user")
+
+			puts "Created user with id " + user.neo_id
+
+			return user
+		else
+			puts "User exists with id " + user.neo_id
+			return user
+		end
+	end
+
+	def create_relationship ( feed , user )
+		if ( @neo.get_node_relationships_to( feed, user ).nil? )
+			feed.outgoing(:subscribed) << user
+			puts "Created relationship"
+		else
+			puts "Relationship exists"
+		end
 	end
 
 end
