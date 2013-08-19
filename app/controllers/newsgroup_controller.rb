@@ -75,8 +75,17 @@ class NewsgroupController < ApplicationController
 
 		current_device = params[:device]
 
+		conn = view_context.get_connection()
+		neo4j_user = view_context.get_user( params[:id] , conn )
+
+
 		entries = GroupEntry.find_all_by_newsgroup_id( params[:groupid] )
+
 		entries.each do |entry|
+
+			neo4j_feed = view_context.get_feed( entry.newssource_id , conn )
+			view_context.delete_relationship( neo4j_feed , neo4j_user , conn )
+
 			entry.destroy
 		end
 

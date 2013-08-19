@@ -36,7 +36,6 @@ class NewssourceController < ApplicationController
 		conn = view_context.get_connection()
 		neo4j_user = view_context.get_user( params[:id] , conn )
 
-
 		neo4j_feed = view_context.get_feed( feed_id , conn )
 		view_context.delete_relationship( neo4j_feed , neo4j_user , conn )
 
