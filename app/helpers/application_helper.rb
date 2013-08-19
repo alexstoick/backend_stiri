@@ -23,15 +23,15 @@ module ApplicationHelper
 		return neo
 	end
 
-	def get_feed ( url , conn )
+	def get_feed ( id , conn )
 
-		feed = Neography::Node.find( "feed" , "url" , url )
+		feed = Neography::Node.find( "feed" , "id" , id )
 
 		if ( feed.nil? )
 			puts "Feed does not exist"
 
-			feed = Neography::Node.create( "url" => url )
-			conn.add_node_to_index( "feed" , "url" , url , feed )
+			feed = Neography::Node.create( "feed_id" => id )
+			conn.add_node_to_index( "feed" , "id" , id , feed )
 			conn.add_label( feed , "feed" )
 
 			puts "Created feed with id " + feed.neo_id
@@ -50,7 +50,7 @@ module ApplicationHelper
 		if ( user.nil? )
 			puts "User does not exist"
 
-			user = Neography::Node.create( "id" => id )
+			user = Neography::Node.create( "user_id" => id )
 			conn.add_node_to_index( "user" , "id" , id , user )
 			conn.add_label( user , "user")
 
@@ -71,5 +71,16 @@ module ApplicationHelper
 			puts "Relationship exists"
 		end
 	end
+
+	def delete_relationship ( feed , user , conn )
+		rel = conn.get_node_relationships_to( feed, user )
+		if ( ! rel.nil? )
+			conn.delete_relationship( rel )
+			puts "Deleted relationship"
+		else
+			puts "Relationship does not exist"
+		end
+	end
+
 
 end

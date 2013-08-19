@@ -33,6 +33,13 @@ class NewssourceController < ApplicationController
 		current_device = params[:device]
 		group_id = params[:groupid]
 
+		conn = view_context.get_connection()
+		neo4j_user = view_context.get_user( params[:id] , conn )
+
+
+		neo4j_feed = view_context.get_feed( feed_id , conn )
+		view_context.delete_relationship( neo4j_feed , neo4j_user , conn )
+
 		feed = GroupEntry.find_by_newssource_id_and_newsgroup_id( feed_id , group_id )
 		feed.destroy
 
