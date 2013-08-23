@@ -6,6 +6,10 @@ class NewssourceController < ApplicationController
 	#trebuie sa fii sigur sa deletesti un feed din grupul asta
 	#deleste un feed al userului -- will be solved cand impunem auth_token
 
+	def index
+		@feeds = Newssource.all
+	end
+
 	def change
 
 		new_group = params[:new_groupid]
