@@ -7,10 +7,8 @@ class NewsgroupController < ApplicationController
 
 	def index
 
-		@newsgroup = Newsgroup.find(params[:groupid])
-
-		current_device = params[:device]
-
+		newsgroup = Newsgroup.find(params[:groupid])
+		@newssources = newsgroup.newssources
 	end
 
 	def create

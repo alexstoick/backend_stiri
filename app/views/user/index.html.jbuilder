@@ -1,5 +1,5 @@
 
-json.array! @user.newsgroups do |group|
+json.array! @newsgroups do |group|
 
 	json.group_title group.title
 	json.group_id group.id
