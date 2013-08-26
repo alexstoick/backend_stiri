@@ -31,11 +31,16 @@ class NewsgroupController < ApplicationController
 			feed.url = url
 
 			link = 'http://37.139.8.146:3500/title/?url=' + url
-			title = open( link ).read()
+			content = open( link ).read()
+			parsed = JSON.parse(content)
 
-			feed.title = title
-
-			feed.save!
+			if ( parsed["error"].nil? )
+				feed.title = parsed["title"]
+				feed.save!
+			else
+				render json: { "error" => parsed["error"] }
+				return
+			end
 
 		end
 
