@@ -14,17 +14,17 @@
 ActiveRecord::Schema.define(:version => 20130816145631) do
 
   create_table "articles", :force => true do |t|
-    t.text     "url"
-    t.text     "title"
-    t.text     "description", :limit => 16777215
-    t.text     "text",        :limit => 2147483647
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.string   "url"
+    t.string   "title"
+    t.string   "description"
+    t.string   "text"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "devices", :force => true do |t|
     t.string   "user_id"
-    t.text     "device_id"
+    t.string   "device_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -38,25 +38,26 @@ ActiveRecord::Schema.define(:version => 20130816145631) do
 
   create_table "newsgroups", :force => true do |t|
     t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.integer  "user_id"
   end
 
   create_table "newssources", :force => true do |t|
     t.string   "url"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "title"
   end
 
-  add_index "newssources", ["url"], :name => "url", :unique => true
-
   create_table "users", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string   "name"
+    t.string   "fb_token"
+    t.string   "auth_token"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "msaccount"
-    t.text     "mstoken"
+    t.string   "mstoken"
     t.string   "fbaccount"
     t.string   "fbtoken"
     t.string   "twaccount"
