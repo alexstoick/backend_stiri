@@ -11,20 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130816145631) do
+ActiveRecord::Schema.define(:version => 20130831151539) do
 
   create_table "articles", :force => true do |t|
-    t.string   "url"
-    t.string   "title"
-    t.string   "description"
-    t.string   "text"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.text     "url"
+    t.text     "title"
+    t.text     "description", :limit => 16777215
+    t.text     "text",        :limit => 2147483647
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.text     "image"
   end
 
   create_table "devices", :force => true do |t|
     t.string   "user_id"
-    t.string   "device_id"
+    t.text     "device_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -38,26 +39,36 @@ ActiveRecord::Schema.define(:version => 20130816145631) do
 
   create_table "newsgroups", :force => true do |t|
     t.string   "title"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "user_id"
   end
 
   create_table "newssources", :force => true do |t|
     t.string   "url"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "title"
+    t.string   "image"
   end
 
+  add_index "newssources", ["url"], :name => "url", :unique => true
+
+  create_table "unread_articles", :force => true do |t|
+    t.integer "user_id",    :null => false
+    t.integer "article_id", :null => false
+  end
+
+  add_index "unread_articles", ["article_id"], :name => "article_id"
+  add_index "unread_articles", ["article_id"], :name => "article_id_2"
+  add_index "unread_articles", ["user_id", "article_id"], :name => "user_id"
+  add_index "unread_articles", ["user_id"], :name => "user_id_2"
+
   create_table "users", :force => true do |t|
-    t.string   "name"
-    t.string   "fb_token"
-    t.string   "auth_token"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "msaccount"
-    t.string   "mstoken"
+    t.text     "mstoken"
     t.string   "fbaccount"
     t.string   "fbtoken"
     t.string   "twaccount"

@@ -36,6 +36,7 @@ class NewsgroupController < ApplicationController
 
 			if ( parsed["error"].nil? )
 				feed.title = parsed["title"]
+				feed.image = parsed["image"]
 				feed.save!
 			else
 				render json: { "error" => parsed["error"] }
@@ -47,14 +48,16 @@ class NewsgroupController < ApplicationController
 		neo4j_feed = view_context.get_feed( feed.id , conn )
 		view_context.create_relationship( neo4j_feed , neo4j_user , conn )
 
+		entry = GroupEntry.find_by_newssource_id_and_newsgroup_id( feed.id , params[:groupid] )
 
-		entry = GroupEntry.new()
-		entry.newssource_id = feed.id
-		entry.newsgroup_id = params[:groupid]
-		entry.save!
+		if ( entry.nil? )
+			entry = GroupEntry.new()
+			entry.newssource_id = feed.id
+			entry.newsgroup_id = params[:groupid]
+			entry.save!
+		end
 
-
-		render json: { "id" => feed.id , "title" => feed.title }
+		render json: { "id" => feed.id , "title" => feed.title , "image" => feed.image }
 	end
 
 	def rename
