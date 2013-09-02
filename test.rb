@@ -1,0 +1,1 @@
+puts ENV['key_for_private']
