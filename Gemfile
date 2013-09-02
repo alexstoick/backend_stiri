@@ -13,3 +13,5 @@ gem 'newrelic_rpm'
 gem 'neography'
 
 # gem 'unicorn'
+
+gem 'dotenv-rails'

@@ -1,12 +1,12 @@
 class NewsgroupController < ApplicationController
 
 	require 'open-uri'
-
+	require 'base64'
+	require 'openssl'
 
 	skip_before_filter :verify_authenticity_token
 
 	def index
-
 		newsgroup = Newsgroup.find(params[:groupid])
 		@newssources = newsgroup.newssources
 	end
