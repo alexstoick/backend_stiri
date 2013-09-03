@@ -3,6 +3,7 @@ class NewssourceController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 
 	before_filter :check_auth_token
+	before_filter :check_group_holder
 	#MULTE PROBLEME AICI
 	#trebuie sa fii sigur sa deletesti un feed din grupul asta
 	#deleste un feed al userului -- will be solved cand impunem auth_token

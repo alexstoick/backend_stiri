@@ -16,6 +16,15 @@ class ApplicationController < ActionController::Base
 				end
 			end
 		end
+		def check_group_holder
+			user_id = params[:id]
+			group_id = params[:groupid]
+
+			group = Newsgroup.find_by_user_id_and_id( user_id , group_id )
+			if ( group.nil? )
+				render json: { "error" => "Group does not belond to user" }
+			end
+		end
 
 
 end
