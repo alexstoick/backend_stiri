@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130902095449) do
+ActiveRecord::Schema.define(:version => 20130903065310) do
 
   create_table "articles", :force => true do |t|
     t.text     "url"
@@ -75,8 +75,7 @@ ActiveRecord::Schema.define(:version => 20130902095449) do
     t.text     "twtoken"
     t.string   "gpaccount"
     t.text     "gptoken"
-    t.text     "public_key"
-    t.text     "private_key"
+    t.string   "key"
   end
 
 end

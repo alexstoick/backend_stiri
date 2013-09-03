@@ -36,6 +36,7 @@ class UserController < ApplicationController
 		#fb		#gp		#tw		#ms
 		type = params[:type]
 		new_acc = false
+		wrong_token = false
 		case type
 			when 'fb'
 				user = User.find_by_fbaccount ( account )
@@ -44,6 +45,10 @@ class UserController < ApplicationController
 					user.fbaccount = account
 					user.fbtoken = token
 					new_acc = true
+				else
+					if ( user.fbtoken != token )
+						wrong_token = true
+					end
 				end
 			when 'gp'
 				user = User.find_by_gpaccount ( account )
@@ -52,6 +57,10 @@ class UserController < ApplicationController
 					user.gpaccount = account
 					user.gptoken = token
 					new_acc = true
+				else
+					if ( user.gptoken != token )
+						wrong_token = true
+					end
 				end
 			when 'tw'
 				user = User.find_by_twaccount ( account )
@@ -60,6 +69,10 @@ class UserController < ApplicationController
 					user.twaccount = account
 					user.twtoken = token
 					new_acc = true
+				else
+					if ( user.twtoken != token )
+						wrong_token = true
+					end
 				end
 			when 'ms'
 				user = User.find_by_msaccount ( account )
@@ -68,26 +81,34 @@ class UserController < ApplicationController
 					user.msaccount = account
 					user.mstoken = token
 					new_acc = true
+				else
+					if ( user.mstoken != token )
+						wrong_token = true
+					end
 				end
 			else
 				render json: {"error" => "Wrong type of account"}
 				return
 		end
 
+		if ( wrong_token )
+			render json: { "error" => "Wrong token" }
+			return
+		end
+
 		if ( new_acc )
-			rsa_key = OpenSSL::PKey::RSA.new(2048)
-			cipher =  OpenSSL::Cipher::Cipher.new('des3')
-
-			puts 
-			private_key = rsa_key.to_pem(cipher,ENV['SECRET_KEY'])
-			public_key = rsa_key.public_key.to_pem
-
-			user.private_key = private_key
-			user.public_key = public_key
-
+				begin
+					unique_key = SecureRandom.urlsafe_base64(10, true)
+					exists = true
+					temp = User.find_by_key( unique_key )
+					if ( temp.nil? )
+						exists = false
+						user.key = unique_key
+					end
+				end while exists
 			user.save!
 		end
-		render json: { "id" => user.id , "key" => user.public_key  }
+		render json: { "id" => user.id , "key" => user.key  }
 	end
 
 	def update
