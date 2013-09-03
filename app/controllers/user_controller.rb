@@ -7,15 +7,12 @@ class UserController < ApplicationController
 
 
 	def index
-		#show all feeds
+
 		user = User.find( params[:id] )
 		@newsgroups = user.newsgroups
 	end
 
 	def createGroup
-		#create a new group
-
-		#check for the goddamn auth token
 		user_id = params[:id]
 		title = params[:title]
 
@@ -120,8 +117,6 @@ class UserController < ApplicationController
 	end
 
 	def update
-		#add a different account
-
 		id = params[:id]
 		account=params[:account]
 		token=params[:token]
