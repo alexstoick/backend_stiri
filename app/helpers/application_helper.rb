@@ -81,6 +81,4 @@ module ApplicationHelper
 			puts "Relationship does not exist"
 		end
 	end
-
-
 end

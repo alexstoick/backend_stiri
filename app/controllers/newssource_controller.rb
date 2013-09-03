@@ -2,6 +2,7 @@ class NewssourceController < ApplicationController
 
 	skip_before_filter :verify_authenticity_token
 
+	before_filter :check_auth_token
 	#MULTE PROBLEME AICI
 	#trebuie sa fii sigur sa deletesti un feed din grupul asta
 	#deleste un feed al userului -- will be solved cand impunem auth_token
@@ -29,8 +30,6 @@ class NewssourceController < ApplicationController
 		options = {
 			title: "Stergere feed"
 		}
-
-		#view_context.updateDevices(params[:id] , current_device , options )
 
 		render json: { "success" => true }
 

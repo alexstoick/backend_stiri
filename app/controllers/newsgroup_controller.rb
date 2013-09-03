@@ -6,6 +6,8 @@ class NewsgroupController < ApplicationController
 
 	skip_before_filter :verify_authenticity_token
 
+	before_filter :check_auth_token
+
 	def index
 		newsgroup = Newsgroup.find(params[:groupid])
 		@newssources = newsgroup.newssources
@@ -14,7 +16,6 @@ class NewsgroupController < ApplicationController
 	def create
 
 		url = params[:url]
-
 		if ( url.nil? )
 			render json: {"error" => "Wrong params"}
 			return
@@ -63,7 +64,6 @@ class NewsgroupController < ApplicationController
 	def rename
 
 		new_title = params[:title]
-		current_device = params[:device]
 
 		newsgroup = Newsgroup.find( params[:groupid] )
 		newsgroup.title = new_title
@@ -78,8 +78,6 @@ class NewsgroupController < ApplicationController
 	end
 
 	def delete
-
-		current_device = params[:device]
 
 		conn = view_context.get_connection()
 		neo4j_user = view_context.get_user( params[:id] , conn )

@@ -3,6 +3,9 @@ class UserController < ApplicationController
 
 	require 'openssl'
 
+	before_filter :check_auth_token
+
+
 	def index
 		#show all feeds
 		user = User.find( params[:id] )
@@ -15,6 +18,11 @@ class UserController < ApplicationController
 		#check for the goddamn auth token
 		user_id = params[:id]
 		title = params[:title]
+
+		if ( title.nil? )
+			render json: { "error" => "Title cannot be null" }
+			return
+		end
 
 		newsgroup = Newsgroup.new()
 		newsgroup.title = title
