@@ -2,8 +2,8 @@ class NewssourceController < ApplicationController
 
 	skip_before_filter :verify_authenticity_token
 
-	before_filter :check_auth_token
-	before_filter :check_group_holder
+	before_filter :check_auth_token , :except => :index
+	before_filter :check_group_holder , :except => :index
 
 	def index
 		@feeds = Newssource.all
