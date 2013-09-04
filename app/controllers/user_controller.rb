@@ -29,19 +29,23 @@ class UserController < ApplicationController
 		render json: { "success" => true , "group_id" => newsgroup.id }
 	end
 
+#https://graph.facebook.com/me?access_token=
+#https://www.googleapis.com/plus/v1/people/me?access_token=
+
 	def create
 
-		account = params[:account]
 		token = params[:token]
+		#fb		#gp		#tw		#ms
+		type = params[:type]
 
-		if ( account.nil? || token.nil? )
+		if ( type.nil? || token.nil? )
 			render json: { "error" => "Wrong params" }, :status => :bad_request
 			return
 		end
-		#fb		#gp		#tw		#ms
-		type = params[:type]
+
+
 		new_acc = false
-		wrong_token = false
+
 		case type
 			when 'fb'
 				user = User.find_by_fbaccount( account )
@@ -64,30 +68,6 @@ class UserController < ApplicationController
 					new_acc = true
 				else
 					if ( user.gptoken != token )
-						wrong_token = true
-					end
-				end
-			when 'tw'
-				user = User.find_by_twaccount( account )
-				if ( user.nil? )
-					user = User.new()
-					user.twaccount = account
-					user.twtoken = token
-					new_acc = true
-				else
-					if ( user.twtoken != token )
-						wrong_token = true
-					end
-				end
-			when 'ms'
-				user = User.find_by_msaccount( account )
-				if ( user.nil? )
-					user = User.new()
-					user.msaccount = account
-					user.mstoken = token
-					new_acc = true
-				else
-					if ( user.mstoken != token )
 						wrong_token = true
 					end
 				end
