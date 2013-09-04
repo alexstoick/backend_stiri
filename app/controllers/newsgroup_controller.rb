@@ -18,7 +18,7 @@ class NewsgroupController < ApplicationController
 
 		url = params[:url]
 		if ( url.nil? )
-			render json: {"error" => "Wrong params"}
+			render json: {"error" => "Wrong params"}, :status => :bad_request
 			return
 		end
 
@@ -41,7 +41,7 @@ class NewsgroupController < ApplicationController
 				feed.image = parsed["image"]
 				feed.save!
 			else
-				render json: { "error" => parsed["error"] }
+				render json: { "error" => parsed["error"] }, :status => :bad_request
 				return
 			end
 

@@ -4,14 +4,14 @@ class ApplicationController < ActionController::Base
 	private
 		def check_auth_token
 			user_id = params[:id]
-			token = params[:token]
+			token = params[:key]
 			if ( token.nil? )
-				render json: { "error" => "Missing token parameter" }
+				render json: { "error" => "Missing KEY parameter" }, :status => :unauthorized
 				return
 			else
 				user = User.find(user_id)
 				if ( user.key != token )
-					render json: { "error" => "Wrong token" }
+					render json: { "error" => "Wrong KEY" }, :status => :unauthorized
 					return
 				end
 			end
@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
 
 			group = Newsgroup.find_by_user_id_and_id( user_id , group_id )
 			if ( group.nil? )
-				render json: { "error" => "Group does not belond to user" }
+				render json: { "error" => "Group does not belond to user" }, :status => :unauthorized
 			end
 		end
 

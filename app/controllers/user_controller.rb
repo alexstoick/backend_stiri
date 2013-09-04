@@ -17,7 +17,7 @@ class UserController < ApplicationController
 		title = params[:title]
 
 		if ( title.nil? )
-			render json: { "error" => "Title cannot be null" }
+			render json: { "error" => "Title cannot be null" }, :status => :bad_request
 			return
 		end
 
@@ -35,7 +35,7 @@ class UserController < ApplicationController
 		token = params[:token]
 
 		if ( account.nil? || token.nil? )
-			render json: { "error" => "Wrong params"}
+			render json: { "error" => "Wrong params" }, :status => :bad_request
 			return
 		end
 		#fb		#gp		#tw		#ms
@@ -92,12 +92,12 @@ class UserController < ApplicationController
 					end
 				end
 			else
-				render json: {"error" => "Wrong type of account"}
+				render json: {"error" => "Wrong type of account"}, :status => :bad_request
 				return
 		end
 
 		if ( wrong_token )
-			render json: { "error" => "Wrong token" }
+			render json: { "error" => "Wrong token" }, :status => :bad_request
 			return
 		end
 
@@ -122,7 +122,7 @@ class UserController < ApplicationController
 		token=params[:token]
 
 		if ( id.nil? || account.nil? || token.nil? )
-			render json: { "error" => "Wrong params" }
+			render json: { "error" => "Wrong params" }, :status => :bad_request
 			return
 		end
 
@@ -144,7 +144,7 @@ class UserController < ApplicationController
 				user.msaccount = account
 				user.mstoken = token
 			else
-				render json: {"error" => "Wrong type of account"}
+				render json: {"error" => "Wrong type of account"}, :status => :bad_request
 				return
 		end
 		user.save!
