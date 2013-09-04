@@ -44,7 +44,7 @@ class UserController < ApplicationController
 		wrong_token = false
 		case type
 			when 'fb'
-				user = User.find_by_fbaccount ( account )
+				user = User.find_by_fbaccount( account )
 				if ( user.nil? )
 					user = User.new()
 					user.fbaccount = account
@@ -56,7 +56,7 @@ class UserController < ApplicationController
 					end
 				end
 			when 'gp'
-				user = User.find_by_gpaccount ( account )
+				user = User.find_by_gpaccount( account )
 				if ( user.nil? )
 					user = User.new()
 					user.gpaccount = account
@@ -68,7 +68,7 @@ class UserController < ApplicationController
 					end
 				end
 			when 'tw'
-				user = User.find_by_twaccount ( account )
+				user = User.find_by_twaccount( account )
 				if ( user.nil? )
 					user = User.new()
 					user.twaccount = account
@@ -80,7 +80,7 @@ class UserController < ApplicationController
 					end
 				end
 			when 'ms'
-				user = User.find_by_msaccount ( account )
+				user = User.find_by_msaccount( account )
 				if ( user.nil? )
 					user = User.new()
 					user.msaccount = account
