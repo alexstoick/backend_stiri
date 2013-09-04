@@ -3,7 +3,7 @@ class UserController < ApplicationController
 
 	require 'openssl'
 
-	before_filter :check_auth_token
+	before_filter :check_auth_token , :except => :create
 
 
 	def index
