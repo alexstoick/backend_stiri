@@ -2,6 +2,7 @@ class UserController < ApplicationController
 	skip_before_filter :verify_authenticity_token
 
 	require 'openssl'
+	OpenSSL::SSL::VERIFY_PEER=OpenSSL::SSL::VERIFY_NONE
 
 	before_filter :check_auth_token , :except => :create
 
@@ -29,9 +30,6 @@ class UserController < ApplicationController
 		render json: { "success" => true , "group_id" => newsgroup.id }
 	end
 
-#https://graph.facebook.com/me?access_token=
-#https://www.googleapis.com/plus/v1/people/me?access_token=
-
 	def create
 
 		token = params[:token]
@@ -45,30 +43,51 @@ class UserController < ApplicationController
 
 
 		new_acc = false
+		wrong_token = false
+
+
+		gp_base_url = "https://www.googleapis.com/plus/v1/people/me?key=AIzaSyCymyNshWhxw5X3hPnlWmc4vNEk2KNAtmQ&access_token="
+		fb_base_url = "https://graph.facebook.com/me?access_token="
 
 		case type
 			when 'fb'
-				user = User.find_by_fbaccount( account )
-				if ( user.nil? )
-					user = User.new()
-					user.fbaccount = account
-					user.fbtoken = token
-					new_acc = true
-				else
-					if ( user.fbtoken != token )
-						wrong_token = true
+
+				link = fb_base_url + token
+
+				begin
+					content = open( link ).read()
+				rescue OpenURI::HTTPError => ex
+					wrong_token = true
+				end
+
+				if ( ! wrong_token )
+					parsed = JSON.parse(content)
+					account = parsed["id"]
+					user = User.find_by_fbaccount( account )
+					if ( user.nil? )
+						user = User.new()
+						user.fbaccount = account
+						new_acc = true
 					end
 				end
+
 			when 'gp'
-				user = User.find_by_gpaccount( account )
-				if ( user.nil? )
-					user = User.new()
-					user.gpaccount = account
-					user.gptoken = token
-					new_acc = true
-				else
-					if ( user.gptoken != token )
-						wrong_token = true
+
+				link = gp_base_url + token
+				begin
+					content = open( link ).read()
+				rescue OpenURI::HTTPError => ex
+					wrong_token = true
+				end
+
+				if ( ! wrong_token )
+					parsed = JSON.parse(content)
+					account = parsed["id"]
+					user = User.find_by_gpaccount( account )
+					if ( user.nil? )
+						user = User.new()
+						user.gpaccount = account
+						new_acc = true
 					end
 				end
 			else
