@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130903065310) do
+ActiveRecord::Schema.define(:version => 20130905105513) do
 
   create_table "articles", :force => true do |t|
     t.text     "url"
@@ -55,26 +55,18 @@ ActiveRecord::Schema.define(:version => 20130903065310) do
   add_index "newssources", ["url"], :name => "url", :unique => true
 
   create_table "unread_articles", :force => true do |t|
-    t.integer "user_id",    :null => false
-    t.integer "article_id", :null => false
+    t.integer "newsgroup_id"
+    t.integer "article_id"
+    t.integer "user_id"
   end
-
-  add_index "unread_articles", ["article_id"], :name => "article_id"
-  add_index "unread_articles", ["article_id"], :name => "article_id_2"
-  add_index "unread_articles", ["user_id", "article_id"], :name => "user_id"
-  add_index "unread_articles", ["user_id"], :name => "user_id_2"
 
   create_table "users", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "msaccount"
-    t.text     "mstoken"
     t.string   "fbaccount"
-    t.string   "fbtoken"
     t.string   "twaccount"
-    t.text     "twtoken"
     t.string   "gpaccount"
-    t.text     "gptoken"
     t.string   "key"
   end
 

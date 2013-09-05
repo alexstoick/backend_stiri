@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
-one:
-  newssource_id: 
-  newsgroup_id: 
-
-two:
-  newssource_id: 
-  newsgroup_id: 
