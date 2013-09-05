@@ -1,11 +1,5 @@
 BackendStiri::Application.routes.draw do
 
-  get "unread_article/index"
-
-  get "unread_article/delete"
-
-	root :to => "user#index"
-
 	match "user/login" => "user#create", :via => :post
 	match "user/merge" => "user#update", :via => :put
 	match "user/:id" , :to => "user#index" , :via => :get
