@@ -11,5 +11,13 @@ class UnreadArticleController < ApplicationController
 	end
 
 	def delete
+		if ( params[:article_id].nil? )
+			render json: { "error" => "No article_id parameter" }, :status => :bad_request
+			return
+		end
+		user = User.find(params[:id])
+		entry = UnreadArticle.find_by_user_id_and_article_id( params[:id] , params[:article_id] )
+		entry.destroy
+		render json: { "success" => true }
 	end
 end
