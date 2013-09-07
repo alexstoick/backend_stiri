@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130905105513) do
+ActiveRecord::Schema.define(:version => 20130907074029) do
 
   create_table "articles", :force => true do |t|
     t.text     "url"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(:version => 20130905105513) do
     t.datetime "updated_at"
     t.string   "title"
     t.string   "image"
+    t.string   "category"
   end
 
   add_index "newssources", ["url"], :name => "url", :unique => true
