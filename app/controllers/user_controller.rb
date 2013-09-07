@@ -6,7 +6,6 @@ class UserController < ApplicationController
 
 	before_filter :check_auth_token , :except => :create
 
-
 	def index
 
 		user = User.find( params[:id] )
