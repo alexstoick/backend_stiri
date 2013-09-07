@@ -13,23 +13,6 @@ class UserController < ApplicationController
 		@newsgroups = user.newsgroups
 	end
 
-	def createGroup
-		user_id = params[:id]
-		title = params[:title]
-
-		if ( title.nil? )
-			render json: { "error" => "Title cannot be null" }, :status => :bad_request
-			return
-		end
-
-		newsgroup = Newsgroup.new()
-		newsgroup.title = title
-		newsgroup.user_id = user_id
-		newsgroup.save!
-
-		render json: { "success" => true , "group_id" => newsgroup.id }
-	end
-
 	def create
 
 		token = params[:token]

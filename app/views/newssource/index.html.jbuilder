@@ -1,1 +1,2 @@
-json.array! @feeds, :url , :id , :category
+json.categories @categories
+json.feeds @feeds
