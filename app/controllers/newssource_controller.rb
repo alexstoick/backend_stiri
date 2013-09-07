@@ -6,7 +6,7 @@ class NewssourceController < ApplicationController
 	before_filter :check_group_holder , :except => [ :index, :select ]
 
 	def index
-		@feeds = Newssource.select('url, id, category').all
+		@feeds = Newssource.select('url, id, category, title, image').all
 		@categories = Newssource.uniq.pluck(:category)
 	end
 
