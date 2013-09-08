@@ -25,7 +25,14 @@ class NewssourceController < ApplicationController
 		conn = view_context.get_connection()
 		neo4j_user = view_context.get_user( params[:id] , conn )
 
+		feeds = User.find(params[:id]).newssources
+
 		feed = Newssource.find_by_url( url )
+
+		if ( feeds.include?(feed) )
+			render json: { "error" => "Feed already in a group" }, :status => :bad_request
+			return
+		end
 
 		if ( feed.nil? )
 
