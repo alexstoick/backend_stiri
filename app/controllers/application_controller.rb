@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
 
 			group = Newsgroup.find_by_user_id_and_id( user_id , group_id )
 			if ( group.nil? )
-				render json: { "error" => "Group does not belond to user" }, :status => :unauthorized
+				render json: { "error" => "Group does not belong to user" }, :status => :unauthorized
 			end
 		end
 
